@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/marzi/pv264/Linked List/linkedlist.h
+iostream
+-
+memory
+-
+
+/home/marzi/pv264/Linked List/main.cpp
+iostream
+-
+linkedlist.h
+/home/marzi/pv264/Linked List/linkedlist.h
+
