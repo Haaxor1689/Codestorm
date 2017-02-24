@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 class Person {
 	std::string name;
@@ -17,8 +18,8 @@ public:
 	// i.e. after x = std::move(y), y is empty and x contains the
 	// original content of y (without copying anything).
 	Person(std::string n) : name(std::move(n)) {}
-	Person(Person&& other) : name(std::move(other.name)) {}
-	virtual void report() {
+	virtual ~Person() {}
+	virtual void report() const {
 		std::cout << "Generic person: " << name << '\n';
 	}
 };
@@ -30,11 +31,10 @@ public:
 	void enroll(std::string course) {
 		courses.push_back(std::move(course));
 	}
-	virtual void report() const {
+	void report() const override {
 		std::cout << "Student " << getName() << ", enrolled in courses:";
-		for (std::vector<std::string>::const_iterator it = courses.begin();
-		     it != courses.end(); ++it) {
-			std::cout << "\n\t" << *it;
+		for (auto it : courses) {
+			std::cout << "\n\t" << it;
 		}
 		std::cout << "\n\t(" << courses.size() << " courses in total)\n";
 	}
@@ -44,9 +44,9 @@ class Teacher : public Person {
 	std::string office;
 	std::string phoneNumber;
 public:
-	Teacher(const std::string& n, const std::string& o, const std::string& pn)
-		: Person(n), office(o), phoneNumber(pn) {}
-	virtual void report() const {
+	Teacher(std::string n, std::string o, std::string pn)
+		: Person(std::move(n)), office(std::move(o)), phoneNumber(std::move(pn)) {}
+	void report() const override {
 		std::cout << "Teacher " << getName() << ", office "
 		          << office << ", phone no. " << phoneNumber << "\n";
 	}
@@ -70,7 +70,7 @@ void askForCourses(Student& s) {
 
 int main() {
 	using namespace std;
-	vector<Person*> people;
+	vector<unique_ptr<Person> > people;
 
 	string choice;
 
@@ -82,20 +82,28 @@ int main() {
 		}
 		string name = ask("Name: ");
 		if (choice == "P") {
-			people.push_back(new Person(name));
+			people.push_back(make_unique<Person>(name));
 		} else if (choice == "S") {
-			Student s(name);
-			askForCourses(s);
-			people.push_back(&s);
+
+			std::unique_ptr<Person> p = make_unique<Student>(name);
+			askForCourses(dynamic_cast<Student&>(*p));
+			people.push_back(std::move(p));
+			/*
+			std::unique_ptr<Person> ptr;
+			Student* s = new Student(name);
+			askForCourses(*s);
+			ptr.reset(s);
+			people.push_back(std::move(ptr));
+			 */
 		} else {
 			string office = ask("Office: ");
 			string phoneNo = ask("Phone no.: ");
-			people.push_back(new Teacher(name, office, phoneNo));
+			people.push_back(std::make_unique<Teacher>(name, office, phoneNo));
 		}
 	}
 
 	cout << "\nPeople:\n";
-	for (vector<Person*>::iterator it = people.begin(); it != people.end(); ++it) {
-		(*it)->report();
+	for (auto& it : people){
+		it->report();
 	}
 }

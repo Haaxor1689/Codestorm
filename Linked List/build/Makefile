@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named Linked_List
+
+# Build rule for target.
+Linked_List: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Linked_List
+.PHONY : Linked_List
+
+# fast build rule for target.
+Linked_List/fast:
+	$(MAKE) -f CMakeFiles/Linked_List.dir/build.make CMakeFiles/Linked_List.dir/build
+.PHONY : Linked_List/fast
+
+#=============================================================================
 # Target rules for targets named Tests
 
 # Build rule for target.
@@ -124,17 +137,44 @@ Tests/fast:
 .PHONY : Tests/fast
 
 #=============================================================================
-# Target rules for targets named Linked_List
+# Target rules for targets named Fix
 
 # Build rule for target.
-Linked_List: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Linked_List
-.PHONY : Linked_List
+Fix: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Fix
+.PHONY : Fix
 
 # fast build rule for target.
-Linked_List/fast:
-	$(MAKE) -f CMakeFiles/Linked_List.dir/build.make CMakeFiles/Linked_List.dir/build
-.PHONY : Linked_List/fast
+Fix/fast:
+	$(MAKE) -f CMakeFiles/Fix.dir/build.make CMakeFiles/Fix.dir/build
+.PHONY : Fix/fast
+
+fixthis.o: fixthis.cpp.o
+
+.PHONY : fixthis.o
+
+# target to build an object file
+fixthis.cpp.o:
+	$(MAKE) -f CMakeFiles/Fix.dir/build.make CMakeFiles/Fix.dir/fixthis.cpp.o
+.PHONY : fixthis.cpp.o
+
+fixthis.i: fixthis.cpp.i
+
+.PHONY : fixthis.i
+
+# target to preprocess a source file
+fixthis.cpp.i:
+	$(MAKE) -f CMakeFiles/Fix.dir/build.make CMakeFiles/Fix.dir/fixthis.cpp.i
+.PHONY : fixthis.cpp.i
+
+fixthis.s: fixthis.cpp.s
+
+.PHONY : fixthis.s
+
+# target to generate assembly for a file
+fixthis.cpp.s:
+	$(MAKE) -f CMakeFiles/Fix.dir/build.make CMakeFiles/Fix.dir/fixthis.cpp.s
+.PHONY : fixthis.cpp.s
 
 linkedlist.o: linkedlist.cpp.o
 
@@ -197,9 +237,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... rebuild_cache"
-	@echo "... Tests"
 	@echo "... Linked_List"
+	@echo "... Tests"
+	@echo "... Fix"
+	@echo "... rebuild_cache"
+	@echo "... fixthis.o"
+	@echo "... fixthis.i"
+	@echo "... fixthis.s"
 	@echo "... linkedlist.o"
 	@echo "... linkedlist.i"
 	@echo "... linkedlist.s"
