@@ -11,221 +11,354 @@ Here your task is to implement doubly linked list in C++14.
 
  */
 
+#include <iostream>
+#include <initializer_list>
 #include <memory>
 
-namespace {
-    template <typename T>
-    class Node {
-    public:
-        Node() = default;
-        Node(const T& val ) : _data(std::make_unique<T>(val)) {}
+template <typename T> class LinkedList;
 
-        T& value() noexcept {
-            return *_data;
-        }
 
-        const T& value() const noexcept {
-            return *_data;
-        }
+namespace detail {
 
-        Node* next() noexcept {
-            return _next.get();
-        }
+	/**
+	 * Class representing inner Node of LinkedList
+	 */
+	template <typename T>
+	class Node {
+	public:
+		friend class LinkedList<T>;
+		friend std::unique_ptr<Node> std::make_unique<Node>(T&);
+		friend std::unique_ptr<Node> std::make_unique<Node>(T&&);
 
-        void next(std::unique_ptr<Node> n) noexcept {
-            _next = std::move(n);
-        }
+		using value_type = T;
 
-        const Node* next() const noexcept {
-            return _next.get();
-        }
+		/**
+		 * @brief	value getter
+		 * @return 	value
+		 */
+		T& value() noexcept {
+			return _value;
+		}
+		const T& value() const noexcept {
+			return _value;
+		}
 
-        Node* prev() noexcept {
-            return _prev;
-        }
-        void prev(Node* n) noexcept {
-            _prev = n;
-        }
-        const Node* prev() const noexcept {
-            return _prev;
-        }
+		/**
+		 * @brief	next raw ptr getter
+		 * @return  raw ptr to next
+		 */
+		Node*  next() noexcept {
+			return _next.get();
+		}
+		const Node*  next() const noexcept {
+			return _next.get();
+		}
 
-        std::unique_ptr<T> _data;
-        std::unique_ptr<Node> _next;
-        Node* _prev;
-    };
+		/**
+		 * @brief	prev raw ptr getter
+		 * @return 	raw ptr to prev
+		 */
+		Node*  prev() noexcept {
+			return _prev;
+		}
+		const Node* prev() const noexcept {
+			return _prev;
+		}
 
-    template <typename Nod>
-    class fw_iterator {
-    public:
-        using reference = Nod&;
-        using pointer   = Nod*;
-    private:
-        Nod* _current;
-    public:
-        fw_iterator() : _current(nullptr) {}
-        fw_iterator(Nod* ptr) : _current(ptr) {}
-        fw_iterator(const fw_iterator& it)
-                : _current(it._current) {}
+	protected:
 
-        reference operator*() const noexcept {
-            return *_current;
-        }
+		Node() : _prev(nullptr) {}
+		Node(T val) : _value(std::move(val)), _prev(nullptr) {}
+		Node(const Node&) = delete;
+		Node(Node&& other) : _value(std::move(other._value)),
+							 _next(std::move(other._next)),
+							 _prev(other._prev) {}
 
-        pointer operator->() const noexcept {
-            return _current;
-        }
+		/**
+		 * @brief	value setter
+		 * @param 	val
+		 */
+		void value(T val) noexcept {
+			_value = std::move(val);
+		}
 
-        fw_iterator& operator++() noexcept {
-            _current = _current->next();
-            return *this;
-        }
+		/**
+		 * @brief	next setters
+		 * @param 	nxt
+		 */
+		void next(Node* nxt) noexcept {
+			_next.reset(nxt);
+		}
+		void next(std::unique_ptr<Node> nxt) noexcept {
+			_next = std::move(nxt);
+		}
 
-        fw_iterator operator++(int) noexcept {
-            fw_iterator cpy = *this;
-            _current = _current->next();
-            return cpy;
-        }
+		/**
+		 * @brief	prev stter
+		 * @param 	prv
+		 */
+		void prev(Node* prv) noexcept {
+			_prev = prv;
+		}
 
-        fw_iterator& operator--() noexcept {
-            _current = _current->prev();
-            return *this;
-        }
+	private:
+		T _value;
+		std::unique_ptr<Node> _next;
+		Node*  _prev;
+	};
 
-        fw_iterator operator--(int) noexcept {
-            fw_iterator cpy = *this;
-            _current = _current->prev();
-            return cpy;
-        }
-
-        friend bool operator==(const fw_iterator& i1, const fw_iterator& i2) noexcept {
-            return i1._current == i2._current;
-        }
-
-        friend bool operator!=(const fw_iterator& i1, const fw_iterator& i2) noexcept {
-            return i1._current != i2._current;
-        }
-    };
-}
+} // namespace detail
 
 template< typename T >
 class LinkedList {
 public:
-    using Node = ::Node<T>;
-    using iterator = ::fw_iterator<Node>;
-    using const_iterator = ::fw_iterator<const Node>;
+    using Node = detail::Node<T>;
 
+	/**
+	 * @brief	default ctor
+	 */
     LinkedList() = default;
-    LinkedList(const LinkedList& other) {
-        for (auto& nod : other) {
-            push_back(nod.value());
-        }
-    }
 
+	/**
+	 * @brief	copy ctor
+	 * @param 	ll		copied LinkedList
+	 */
+    LinkedList(const LinkedList &ll) {
+		const auto* ptr = ll.first();
+		while (ptr != nullptr) {
+			push_back(ptr->value());
+			ptr = ptr->next();
+		}
+	}
+
+	/**
+	 * @brief	move ctor
+	 * @param 	ll 		moved LinkedList
+	 */
+	LinkedList(LinkedList&& ll) noexcept : _first(std::move(ll._first)),
+										   _last(ll._last) {
+		ll._last = nullptr;
+	}
+
+	LinkedList(std::initializer_list<T> init) {
+		for (auto elem : init)
+			push_back(std::move(elem));
+	}
+
+	/**
+	 * @brief	copy assigment operator
+	 * @param 	ll 		copied LinkedList
+	 * @return 	reference to this instance of LL
+	 */
+	LinkedList& operator=(const LinkedList& ll) {
+		clear();
+		const auto* ptr = ll.first();
+		while (ptr != nullptr) {
+			push_back(ptr->value());
+			ptr = ptr->next();
+		}
+		return *this;
+	}
+
+	/**
+	 * @brief	move assigment operator
+	 * @param 	ll		moved LinkedList
+	 * @return 	reference to this instance of LL
+	 */
+	LinkedList& operator=(LinkedList&& ll) noexcept {
+		_first = std::move(ll._first);
+		_last = ll._last;
+		ll._last = nullptr;
+		return *this;
+	}
+
+	/**
+	 * @brief	initializer_list assigment operator
+	 * @param 	init
+	 * @return 	reference to this instance of LL
+	 */
+	LinkedList& operator=(std::initializer_list<T> init) {
+		this->operator=(std::move(LinkedList(init)));
+		return *this;
+	}
+
+	/**
+	 * @brief
+	 * @return	true if LinkedList is empty, false otherwise
+	 */
     bool empty() const noexcept {
-        return _first.get() == nullptr;
-    }
+		return !_first && !_last;
+	}
 
+	/**
+	 * @brief 	function getting raw ptr to first elem
+	 * @return 	raw ptr to first elem, nullptr if empty
+	 */
     Node* first() noexcept {
-        return _first.get();
-    }
+		return _first.get();
+	}
     const Node* first() const noexcept {
-        return _first.get();
-    }
+		return _first.get();
+	}
 
-    iterator begin() noexcept {
-        return iterator(_first.get());
-    }
-    const_iterator begin() const noexcept {
-        return const_iterator(_first.get());
-    }
+	/**
+	 * @brief	function getting raw ptr to last elem
+	 * @return 	raw ptr to last elem, nullptr if empty
+	 */
+    Node* last() noexcept {
+		return _last;
+	}
+    const Node* last() const noexcept {
+		return _last;
+	}
 
-    Node* last() noexcept{
-        return _last;
-    }
-    const Node* last() const {
-        return _last;
-    }
+	/**
+	 * @brief	function looking up for value
+	 * @param 	val
+	 * @return	pointer to Node containing value, nullptr if value is not present
+	 */
+    Node* find(const T& val) noexcept {
+		auto* p = first();
+		while (p) {
+			if (p->value() == val)
+				return p;
+			p = p->next();
+		}
+		return nullptr;
+	}
+    const Node* find(const T& val) const noexcept {
+		return const_cast<const Node*>(const_cast<LinkedList*>(this)->find(val));
+	}
 
-    iterator end() noexcept {
-        return iterator(nullptr);
-    }
-    const_iterator end() const {
-        return const_iterator(nullptr);
-    }
+	/**
+	 * @brief	erases value from LL
+	 * @param 	val
+	 */
+    void erase(const T& val) {
+		erase(find(val));
+	}
 
-    Node* find( const T &val ) {
-        auto it = begin();
-        while (it != end()) {
-            if (it->value() == val) {
-                return it.operator->();
-            }
-            ++it;
-        }
-        return nullptr;
-    }
-    const Node* find( const T &val ) const {
-        auto it = begin();
-        while (it != end()) {
-            if (it->value() == val) {
-                return it.operator->();
-            }
-            ++it;
-        }
-        return nullptr;
-    }
+	/**
+	 * @brief	erases Node from LL
+	 * @param 	n
+	 */
+	void erase(Node* n) {
+		if (n) {
+			if (n == first() && n == last()) {
+				clear();
+			} else {
+				if (n ==first()) {
+					n->next()->prev(nullptr);
+					_first.reset(n->_next.release());
+				} else {
+					if (n == last()) {
+						_last = _last->prev();
+						_last->_next.reset();
+					} else {
+						n->next()->prev(n->prev());
+						n->prev()->next(n->_next.release());
+					}
+				}
+			}
+		}
+	}
 
-    void erase(T val) {
-        Node* ptr = find(val);
-        if (ptr) {
-            erase(ptr);
-        }
-    }
-    void erase(Node *n) {
-        if (n == _last) {
-            _last = n->prev();
-        }
+	/**
+	 * @brief	inserts value before element specified in params
+	 * @param 	n 		Node before which insertion will take place
+	 * @param 	val		value to be inserted
+	 */
+    void insert_before(Node* const n, T val) {
+		if (n) {
+			if (n == first()) {
+				push_front(std::move(val));
+			} else {
+				auto nod = std::make_unique<Node>(std::move(val));
+				auto* prv = n->prev();
+				nod->prev(n->prev());
+				n->prev(nod.get());
+				nod->next(prv->_next.release());
+				prv->next(std::move(nod));
+			}
+		}
+	}
 
-        if (n == _first.get()) {
-            _first = std::move(n->_next);
-        }
+	/**
+	 * @brief	inserts value after element specified in params
+	 * @param 	n		Node after which insertion will take place
+	 * @param val 		value to be inserted
+	 */
+    void insert_after(Node* const n, T val) {
+		if (n) {
+			if (n == last()) {
+				push_back(std::move(val));
+			} else {
+				insert_before(n->next(), std::move(val));
+			}
+		}
+	}
 
-        if (n->next()) {
-            n->next()->prev(n->prev());
-        }
-
-        if (n->prev()) {
-            n->prev()->next(std::move(n->_next));
-        }
-    }
-
-    void insert_before( Node *n, T val );
-    void insert_after( Node *n, T val );
-
+	/**
+	 * @brief	inserts value at the end of container
+	 * @param 	val
+	 */
     void push_back(T val) {
-		auto n = std::make_unique<Node>(val);
+		auto nod = std::make_unique<Node>(std::move(val));
 		if (empty()) {
-			_first = std::move(n);
+			_first = std::move(nod);
 			_last = _first.get();
 		} else {
-			_last->next(std::move(n));
-			_last->next()->prev(_last);
+			nod->prev(_last);
+			_last->next(std::move(nod));
 			_last = _last->next();
 		}
 	}
-    void push_front( T val ) {
-		auto n = std::make_unique<Node>(val);
+
+	/**
+	 * @brief	inserts value at the beginning of the container
+	 * @param 	val
+	 */
+    void push_front(T val) {
+		auto nod = std::make_unique<Node>(std::move(val));
 		if (empty()) {
-			_first = std::move(n);
-			_last = _first.get();
+			_first = std::move(nod);
+			_last  = _first.get();
 		} else {
-			_first->prev(n.get());
-			_first->prev()->next(std::move(_first));
-			_first = std::move(n);
+			_first->prev(nod.get());
+			nod->next(std::move(_first));
+			_first = std::move(nod);
 		}
 	}
 
+	/**
+	 * @brief	clears container
+	 */
+	void clear() noexcept {
+		_first.reset();
+		_last = nullptr;
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const LinkedList& ll) noexcept {
+		auto* p = ll.first();
+		while (p) {
+			os << p->value() << " ";
+			p = p->next();
+		}
+		os << std::endl;
+		return os;
+	}
+
+	friend std::istream& operator>>(std::istream& is, LinkedList<T>& ll) {
+		while (!is.eof()) {
+			std::string input;
+			std::getline(is, input);
+			ll.push_back(std::move(func(std::move(input))));
+		}
+		return is;
+	}
+
 private:
-    std::unique_ptr<Node> _first;
-    Node* _last;
+	
+	std::unique_ptr<Node> _first;
+	Node* _last = nullptr;
 };

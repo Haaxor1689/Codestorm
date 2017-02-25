@@ -18,7 +18,7 @@ public:
 	// i.e. after x = std::move(y), y is empty and x contains the
 	// original content of y (without copying anything).
 	Person(std::string n) : name(std::move(n)) {}
-	virtual ~Person() {}
+	virtual ~Person() = default;
 	virtual void report() const {
 		std::cout << "Generic person: " << name << '\n';
 	}
@@ -62,10 +62,12 @@ std::string ask(const std::string& query) {
 void askForCourses(Student& s) {
 	std::string course;
 	std::cout << "You may now add student's courses, finish with empty line.\n";
-	do {
+	while (true) {
 		course = ask("Course: ");
+		if (course == "")
+			break;
 		s.enroll(course);
-	} while (course != "");
+	}
 }
 
 int main() {
@@ -84,17 +86,8 @@ int main() {
 		if (choice == "P") {
 			people.push_back(make_unique<Person>(name));
 		} else if (choice == "S") {
-
-			std::unique_ptr<Person> p = make_unique<Student>(name);
-			askForCourses(dynamic_cast<Student&>(*p));
-			people.push_back(std::move(p));
-			/*
-			std::unique_ptr<Person> ptr;
-			Student* s = new Student(name);
-			askForCourses(*s);
-			ptr.reset(s);
-			people.push_back(std::move(ptr));
-			 */
+			people.push_back(make_unique<Student>(name));
+			askForCourses(dynamic_cast<Student&>(*people.back()));
 		} else {
 			string office = ask("Office: ");
 			string phoneNo = ask("Phone no.: ");

@@ -1,4 +1,4 @@
-# Install script for directory: /home/marzi/pv264/Linked List
+# Install script for directory: /home/marzi/Collabs/Codestorm/Linked List
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/marzi/pv264/Linked List/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/marzi/Collabs/Codestorm/Linked List/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

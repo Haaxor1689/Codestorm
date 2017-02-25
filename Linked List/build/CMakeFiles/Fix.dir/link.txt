@@ -1,1 +1,1 @@
-/usr/bin/c++    -std=c++1z -S -Wall -Wextra -Wold-style-cast -Werror -pedantic   CMakeFiles/Fix.dir/fixthis.cpp.o  -o Fix 
+/usr/bin/c++    -std=c++1z -Wall -Wextra -Wold-style-cast -pedantic   CMakeFiles/Fix.dir/fixthis.cpp.o  -o Fix 

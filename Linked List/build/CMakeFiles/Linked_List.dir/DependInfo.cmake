@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/marzi/pv264/Linked List/main.cpp" "/home/marzi/pv264/Linked List/build/CMakeFiles/Linked_List.dir/main.cpp.o"
+  "/home/marzi/Collabs/Codestorm/Linked List/main.cpp" "/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles/Linked_List.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 

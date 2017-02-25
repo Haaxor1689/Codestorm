@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/marzi/pv264/Linked List"
+CMAKE_SOURCE_DIR = "/home/marzi/Collabs/Codestorm/Linked List"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/marzi/pv264/Linked List/build"
+CMAKE_BINARY_DIR = "/home/marzi/Collabs/Codestorm/Linked List/build"
 
 #=============================================================================
 # Target rules for target CMakeFiles/Linked_List.dir
@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = "/home/marzi/pv264/Linked List/build"
 CMakeFiles/Linked_List.dir/all:
 	$(MAKE) -f CMakeFiles/Linked_List.dir/build.make CMakeFiles/Linked_List.dir/depend
 	$(MAKE) -f CMakeFiles/Linked_List.dir/build.make CMakeFiles/Linked_List.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/marzi/pv264/Linked List/build/CMakeFiles" --progress-num=3,4 "Built target Linked_List"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" --progress-num=3,4 "Built target Linked_List"
 .PHONY : CMakeFiles/Linked_List.dir/all
 
 # Include target in all.
@@ -76,9 +76,9 @@ all: CMakeFiles/Linked_List.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Linked_List.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/pv264/Linked List/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Linked_List.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/pv264/Linked List/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" 0
 .PHONY : CMakeFiles/Linked_List.dir/rule
 
 # Convenience name for target.
@@ -103,7 +103,7 @@ clean: CMakeFiles/Linked_List.dir/clean
 CMakeFiles/Tests.dir/all:
 	$(MAKE) -f CMakeFiles/Tests.dir/build.make CMakeFiles/Tests.dir/depend
 	$(MAKE) -f CMakeFiles/Tests.dir/build.make CMakeFiles/Tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/marzi/pv264/Linked List/build/CMakeFiles" --progress-num=5,6 "Built target Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" --progress-num=5,6 "Built target Tests"
 .PHONY : CMakeFiles/Tests.dir/all
 
 # Include target in all.
@@ -113,9 +113,9 @@ all: CMakeFiles/Tests.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/pv264/Linked List/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Tests.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/pv264/Linked List/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" 0
 .PHONY : CMakeFiles/Tests.dir/rule
 
 # Convenience name for target.
@@ -140,7 +140,7 @@ clean: CMakeFiles/Tests.dir/clean
 CMakeFiles/Fix.dir/all:
 	$(MAKE) -f CMakeFiles/Fix.dir/build.make CMakeFiles/Fix.dir/depend
 	$(MAKE) -f CMakeFiles/Fix.dir/build.make CMakeFiles/Fix.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/marzi/pv264/Linked List/build/CMakeFiles" --progress-num=1,2 "Built target Fix"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" --progress-num=1,2 "Built target Fix"
 .PHONY : CMakeFiles/Fix.dir/all
 
 # Include target in all.
@@ -150,9 +150,9 @@ all: CMakeFiles/Fix.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Fix.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/pv264/Linked List/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Fix.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/pv264/Linked List/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles" 0
 .PHONY : CMakeFiles/Fix.dir/rule
 
 # Convenience name for target.

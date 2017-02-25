@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/marzi/pv264/Linked List/catch.hpp
+/home/marzi/Collabs/Codestorm/Linked List/catch.hpp
 sstream
 -
 algorithm
@@ -186,7 +186,7 @@ algorithm
 map
 -
 Foundation/Foundation.h
-/home/marzi/pv264/Linked List/Foundation/Foundation.h
+/home/marzi/Collabs/Codestorm/Linked List/Foundation/Foundation.h
 sstream
 -
 stdexcept
@@ -240,16 +240,18 @@ iomanip
 assert.h
 -
 
-/home/marzi/pv264/Linked List/linkedlist.cpp
+/home/marzi/Collabs/Codestorm/Linked List/linkedlist.cpp
 catch.hpp
-/home/marzi/pv264/Linked List/catch.hpp
+/home/marzi/Collabs/Codestorm/Linked List/catch.hpp
 linkedlist.h
-/home/marzi/pv264/Linked List/linkedlist.h
+/home/marzi/Collabs/Codestorm/Linked List/linkedlist.h
 array
 -
 
-/home/marzi/pv264/Linked List/linkedlist.h
+/home/marzi/Collabs/Codestorm/Linked List/linkedlist.h
 iostream
+-
+initializer_list
 -
 memory
 -

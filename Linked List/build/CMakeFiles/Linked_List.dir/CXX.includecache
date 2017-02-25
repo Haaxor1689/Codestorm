@@ -6,15 +6,21 @@
 
 #IncludeRegexTransform: 
 
-/home/marzi/pv264/Linked List/linkedlist.h
+/home/marzi/Collabs/Codestorm/Linked List/linkedlist.h
 iostream
+-
+initializer_list
 -
 memory
 -
 
-/home/marzi/pv264/Linked List/main.cpp
+/home/marzi/Collabs/Codestorm/Linked List/main.cpp
 iostream
 -
+cassert
+-
+fstream
+-
 linkedlist.h
-/home/marzi/pv264/Linked List/linkedlist.h
+/home/marzi/Collabs/Codestorm/Linked List/linkedlist.h
 

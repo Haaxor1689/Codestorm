@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cassert>
+#include <fstream>
+#include <vector>
 #include "linkedlist.h"
 
 class A {
@@ -7,22 +10,147 @@ public:
 	A(int) {}
 };
 
-int main() {
-	LinkedList<A> l;
-	l.push_front(-1);
-	l.push_back(-1);
-	for (auto i = 0U; i < 400; ++i) {
-		if (i < 100)
-			l.push_back(i);
-		if (i >= 100 && i < 200)
-			l.push_front(i);
-//		if (i >= 200 && i < 300)
-//			l.insert_before(l.find(i % 50), i);
-//		if (i >= 300 && i < 400)
-//			l.insert_after(l.find(i % 50), i);
+class SuperStorm {
+public:
+	SuperStorm() {
+		std::cout << "default\n";
 	}
-//	l.erase(5);
-//	l.insert_after(l.find(6), 5);
-//	std::cout << l;
+	SuperStorm(const SuperStorm&) {
+		std::cout << "cpy\n";
+	}
+	SuperStorm(SuperStorm&&) {
+		std::cout << "mov\n";
+	}
+};
+
+
+
+template <typename T>
+class TD;
+
+int main() {
+	LinkedList<unsigned> ll;
+	{
+		ll.clear();
+		/// push_back
+		std::cout << "push_back" << "\n";
+		for (auto i = 0U; i < 10; ++i) {
+			ll.push_back(i);
+		}
+		unsigned i = 0;
+		const auto* p = ll.first();
+		while (p) {
+			if (p->value() != i)
+				std::cerr << "FAIL: " << p->value() << " != " << i << "\n";
+			p = p->next();
+			++i;
+		}
+		assert(i != 9);
+		std::cout << ll;
+	}
+
+	{
+		ll.clear();
+		/// push_front
+		std::cout << "push_front" << "\n";
+		for (auto i = 0U; i < 10; ++i) {
+			ll.push_front(i);
+		}
+		unsigned i = 9;
+		const auto* p = ll.first();
+		while (p) {
+			if (p->value() != i)
+				std::cerr << "FAIL: " << p->value() << " != " << i << "\n";
+			p = p->next();
+			--i;
+		}
+		assert(i != 0);
+		std::cout << ll;
+	}
+
+	{
+		/// find
+		std::cout << "find" << "\n";
+		const auto* p = ll.last();
+		bool ok = true;
+		for (unsigned i = 0; i < 10; ++i, p = p->prev()) {
+			if (p != ll.find(i)) {
+				std::cerr << "FAIL" << "\n";
+				ok = false;
+			}
+		}
+		if (ok) {
+			std::cout << "OK" << "\n";
+		}
+	}
+
+	{
+		/// erase
+		std::cout << "erase" << "\n";
+		ll.erase(9);
+		std::cout << ll;
+		ll.erase(5);
+		std::cout << ll;
+		ll.erase(0u);
+		std::cout << ll;
+	}
+
+	{
+		/// insert_before
+		std::cout << "insert_before" << "\n";
+		ll.clear();
+		ll.push_back(10);
+		for (unsigned i = 9; i > 0; --i) {
+			ll.insert_before(ll.find(10), i);
+		}
+
+		std::cout << ll;
+	}
+
+	{
+		/// insert_after
+		std::cout << "insert_after" << "\n";
+		ll.clear();
+		ll.push_front(0);
+		for (unsigned i = 0; i < 10; ++i) {
+			ll.insert_after(ll.find(0), i);
+		}
+		std::cout << ll;
+	}
+
+//	auto moo = std::move(ll);
+	decltype(ll) moo;
+	moo = {1, 0, 1, 69};
+	if (moo.find(69))
+		std::cout << "cool\n";
+//	TD<decltype(ll)> td;
+//	moo = std::move(ll);
+	std::cout << "moo:\n" << moo;
+	std::swap(ll, moo);
+	std::cout << "swap:\n" << moo << ll;
+
+	std::cout << ll.pop_front() << "\n" << ll
+			  << ll.pop_front() << "\n" << ll
+			  << ll.pop_front() << "\n" << ll
+			  << ll.pop_front() << "\n" << ll;
+
+	{
+		LinkedList<SuperStorm> lt;
+		lt.push_back(SuperStorm());
+		lt.pop_back();
+	}
+	std::cout << "iterators\n";
+//	for (auto& i : moo) {
+//		i = 100;
+//		std::cout << i << " ";
+//	}
+
+	std::vector<unsigned> v(50, 69);
+	decltype(ll) boo(v.begin(), v.end());
+	std::cout << "boo\n" << boo;
+	auto it = moo.begin();
+//	TD<decltype(it)> td;
+	(*it) = 100;
+
 	return 0;
 }
