@@ -665,11 +665,8 @@ private:
  */
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const LinkedList<T>& ll) noexcept {
-	auto* p = ll.first();
-	while (p) {
-		os << p->value() << " ";
-		p = p->next();
-	}
+	for (const auto& o : ll)
+		os << o << " ";
 	os << std::endl;
 	return os;
 }
