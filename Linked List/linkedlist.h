@@ -289,8 +289,8 @@ public:
 	 */
 	template <typename Iter>
 	LinkedList(Iter first, Iter last) {
-		for (Iter cpy = first; cpy != last; ++cpy) {
-			push_back(*cpy);
+		for (; first != last; ++first) {
+			push_back(*first);
 		}
 	}
 
@@ -300,7 +300,7 @@ public:
 	 */
     LinkedList(const LinkedList &ll) {
 		const auto* ptr = ll.first();
-		while (ptr != nullptr) {
+		while (ptr) {
 			push_back(ptr->value());
 			ptr = ptr->next();
 		}
@@ -437,7 +437,7 @@ public:
 	 * @brief	erases value from LL
 	 * @param 	val
 	 */
-    void erase(const T& val) {
+    void erase(const T& val) noexcept {
 		erase(find(val));
 	}
 
@@ -445,7 +445,7 @@ public:
 	 * @brief	erases Node from LL
 	 * @param 	n
 	 */
-	void erase(Node* n) {
+	void erase(Node* n) noexcept {
 		if (n) {
 			if (n == first() && n == last()) {
 				clear();
