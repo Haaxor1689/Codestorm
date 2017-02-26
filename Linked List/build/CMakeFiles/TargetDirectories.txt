@@ -1,0 +1,5 @@
+/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles/edit_cache.dir
+/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles/Linked_List.dir
+/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles/Tests.dir
+/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles/Fix.dir
+/home/marzi/Collabs/Codestorm/Linked List/build/CMakeFiles/rebuild_cache.dir
