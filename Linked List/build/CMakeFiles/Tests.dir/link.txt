@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++1z -Wall -Wextra -Wold-style-cast -pedantic   CMakeFiles/Tests.dir/linkedlist.cpp.o  -o Tests 
