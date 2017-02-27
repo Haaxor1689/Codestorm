@@ -258,14 +258,14 @@ namespace detail {
 template< typename T>
 class LinkedList {
 public:
-    using Node = detail::Node<T>;
+	using Node = detail::Node<T>;
 	using iterator = detail::forward_iterator<Node*, T>;
 	using const_iterator = detail::forward_iterator<const Node*, const T>;
 
 	/**
 	 * @brief	default ctor
 	 */
-    LinkedList() = default;
+	LinkedList() = default;
 
 	/**
 	 * @brief 	parametric ctor
@@ -298,7 +298,7 @@ public:
 	 * @brief	copy ctor
 	 * @param 	ll		copied LinkedList
 	 */
-    LinkedList(const LinkedList &ll) {
+	LinkedList(const LinkedList &ll) {
 		const auto* ptr = ll.first();
 		while (ptr) {
 			push_back(ptr->value());
@@ -389,7 +389,7 @@ public:
 	 * @brief	empty state getter
 	 * @return	true if LinkedList is empty, false otherwise
 	 */
-    bool empty() const noexcept {
+	bool empty() const noexcept {
 		return !_first && !_last;
 	}
 
@@ -397,10 +397,10 @@ public:
 	 * @brief 	function getting raw ptr to first elem
 	 * @return 	raw ptr to first elem, nullptr if empty
 	 */
-    Node* first() noexcept {
+	Node* first() noexcept {
 		return _first.get();
 	}
-    const Node* first() const noexcept {
+	const Node* first() const noexcept {
 		return _first.get();
 	}
 
@@ -408,10 +408,10 @@ public:
 	 * @brief	function getting raw ptr to last elem
 	 * @return 	raw ptr to last elem, nullptr if empty
 	 */
-    Node* last() noexcept {
+	Node* last() noexcept {
 		return _last;
 	}
-    const Node* last() const noexcept {
+	const Node* last() const noexcept {
 		return _last;
 	}
 
@@ -420,7 +420,7 @@ public:
 	 * @param 	val
 	 * @return	pointer to Node containing value, nullptr if value is not present
 	 */
-    Node* find(const T& val) noexcept {
+	Node* find(const T& val) noexcept {
 		auto* p = first();
 		while (p) {
 			if (p->value() == val)
@@ -429,7 +429,7 @@ public:
 		}
 		return nullptr;
 	}
-    const Node* find(const T& val) const noexcept {
+	const Node* find(const T& val) const noexcept {
 		return const_cast<const Node*>(const_cast<LinkedList*>(this)->find(val));
 	}
 
@@ -437,7 +437,7 @@ public:
 	 * @brief	erases value from LL
 	 * @param 	val
 	 */
-    void erase(const T& val) noexcept {
+	void erase(const T& val) noexcept {
 		erase(find(val));
 	}
 
@@ -472,7 +472,7 @@ public:
 	 * @param 	n 		Node before which insertion will take place
 	 * @param 	val		value to be inserted
 	 */
-    void insert_before(Node* const n, T val) {
+	void insert_before(Node* const n, T val) {
 		if (n) {
 			if (n == first()) {
 				push_front(std::move(val));
@@ -493,7 +493,7 @@ public:
 	 * @param 	n		Node after which insertion will take place
 	 * @param val 		value to be inserted
 	 */
-    void insert_after(Node* const n, T val) {
+	void insert_after(Node* const n, T val) {
 		if (n) {
 			if (n == last()) {
 				push_back(std::move(val));
@@ -507,7 +507,7 @@ public:
 	 * @brief	inserts value at the end of container
 	 * @param 	val
 	 */
-    void push_back(T val) {
+	void push_back(T val) {
 		auto nod = std::make_unique<Node>(std::move(val));
 		if (empty()) {
 			_first = std::move(nod);
@@ -524,7 +524,7 @@ public:
 	 * @brief	inserts value at the beginning of the container
 	 * @param 	val
 	 */
-    void push_front(T val) {
+	void push_front(T val) {
 		auto nod = std::make_unique<Node>(std::move(val));
 		if (empty()) {
 			_first = std::move(nod);
@@ -648,7 +648,7 @@ public:
 	}
 
 private:
-	
+
 	std::unique_ptr<Node> _first;
 	Node* _last = nullptr;
 	std::size_t _size = 0;

@@ -4,23 +4,56 @@
 #include <vector>
 #include "linkedlist.h"
 
+//class A {
+//public:
+//	A() = delete;
+//	A(int) {}
+//};
+//
+//class SuperStorm {
+//public:
+//	SuperStorm() {
+//		std::cout << "default\n";
+//	}
+//	SuperStorm(const SuperStorm&) {
+//		std::cout << "cpy\n";
+//	}
+//	SuperStorm(SuperStorm&&) {
+//		std::cout << "mov\n";
+//	}
+//};
+
+
+
 class A {
 public:
-	A() = delete;
-	A(int) {}
+	A() : attr(0) {
+		std::cout << "def ctor\n";
+	}
+
+	A(int v) : attr(v) {}
+	A(const A& a) : attr(a.attr) {
+		std::cout << "cpy ctor\n";
+	}
+
+	A(A&& a) : attr(a.attr) {
+		a.attr = 0;
+		std::cout << "mov ctor\n";
+	}
+
+	~A() {
+		attr = -1;
+	}
+
+private:
+	int attr;
 };
 
-class SuperStorm {
+class B {
 public:
-	SuperStorm() {
-		std::cout << "default\n";
-	}
-	SuperStorm(const SuperStorm&) {
-		std::cout << "cpy\n";
-	}
-	SuperStorm(SuperStorm&&) {
-		std::cout << "mov\n";
-	}
+	B(const A& ar = A()) : a(std::move(ar)) {}
+private:
+	A a;
 };
 
 
@@ -29,6 +62,7 @@ template <typename T>
 class TD;
 
 int main() {
+	/*
 	LinkedList<unsigned> ll;
 	{
 		ll.clear();
@@ -144,13 +178,18 @@ int main() {
 //		i = 100;
 //		std::cout << i << " ";
 //	}
-
+	std::allocator a;
 	std::vector<unsigned> v(50, 69);
+
 	decltype(ll) boo(v.begin(), v.end());
 	std::cout << "boo\n" << boo;
 	auto it = moo.begin();
 //	TD<decltype(it)> td;
 	(*it) = 100;
+	*/
+
+	A a(100);
+	B b;
 
 	return 0;
 }
