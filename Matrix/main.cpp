@@ -3,8 +3,7 @@
 
 int main() {
 	Matrix<int, 3, 6> m;
-	const decltype(m)& cm = m;
-	cm[0][5] = 100;
+	m.at(2, 3) = 100;
 	std::cout << "Hello, World!" << std::endl;
 	return 0;
 }
