@@ -53,8 +53,8 @@
       <file leaf-file-name="matrix.hpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/matrix.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
+            <state relative-caret-position="53">
+              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#117#202#0" expanded="true" />
@@ -178,12 +178,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1488215574999</updated>
-      <workItem from="1488215576605" duration="965000" />
+      <workItem from="1488215576605" duration="1239000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="965000" />
+    <option name="totallyTimeSpent" value="1239000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
@@ -253,8 +253,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/matrix.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
+        <state relative-caret-position="53">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#117#202#0" expanded="true" />

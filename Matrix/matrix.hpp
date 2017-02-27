@@ -7,19 +7,11 @@
 
 template <typename Type, std::size_t x, std::size_t y, typename Alloc = std::allocator<Type> >
 class Matrix {
-public:
 	using reference = Type&;
 	using const_reference = const Type&;
 	using pointer = Type*;
 	using const_pointer = const Type*;
 	using size_type = std::size_t;
-
-	Matrix();
-	Matrix(const Matrix&);
-	Matrix(Matrix&&);
-
-	reference operator[](size_type);
-	const_reference operator[](size_type) const;
 protected:
 	class Row {
 	public:
@@ -30,6 +22,16 @@ protected:
 	private:
 		std::array<reference, x> _elements;
 	};
+public:
+	using row = Row;
+	using const_row = const Row;
+
+	Matrix();
+	Matrix(const Matrix&);
+	Matrix(Matrix&&);
+
+	row operator[](size_type);
+	const_row operator[](size_type) const;
 
 private:
 	using columns = std::array<Type, y>;
