@@ -1,11 +1,13 @@
 #include <cstddef>
 #include <memory>
 #include <array>
+#include <cassert>
+#include <vector>
 
 #ifndef MATRIX_MATRIX_HPP
 #define MATRIX_MATRIX_HPP
 
-template <typename Type, std::size_t x, std::size_t y, typename Alloc = std::allocator<Type> >
+template <typename Type, std::size_t _height, std::size_t _width>
 class Matrix {
 	using reference = Type&;
 	using const_reference = const Type&;
@@ -15,28 +17,39 @@ class Matrix {
 protected:
 	class Row {
 	public:
-		Row(pointer const Obj);
+		Row(size_type num, const Matrix& m) {
+			assert(num < _height);
+			for (size_type i = 0; i < _width; ++i) {
+				_elems[i] = const_cast<pointer>(&(m._elements[i].operator[](num)));
+			}
+		}
 
-		reference operator[](size_type);
-		const_reference operator[](size_type) const;
+		reference operator[](size_type pos) {
+			return *_elems[pos];
+		}
+		const_reference operator[](size_type pos) const {
+			return *_elems[pos];
+		}
 	private:
-		std::array<reference, x> _elements;
+		std::array<pointer, _width> _elems;
 	};
-public:
-	using row = Row;
-	using const_row = const Row;
 
-	Matrix();
+public:
+
+	Matrix() = default;
 	Matrix(const Matrix&);
 	Matrix(Matrix&&);
+	~Matrix() = default;
 
-	row operator[](size_type);
-	const_row operator[](size_type) const;
+	Row operator[](size_type row_num) {
+		return Row(row_num, const_cast<const Matrix&>(*this));
+	}
+	const Row operator[](size_type row_num) const {
+		return Row(row_num, *this);
+	}
 
 private:
-	using columns = std::array<Type, y>;
-
-	std::array<columns, x>* _elems;
+	std::vector<std::vector<Type> > _elements = std::vector<std::vector<Type> >(_width, std::vector<Type>(_height));
 };
 
 #endif //MATRIX_MATRIX_HPP
