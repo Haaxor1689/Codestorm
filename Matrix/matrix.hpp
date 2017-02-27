@@ -17,18 +17,18 @@ class Matrix {
 protected:
 	class Row {
 	public:
-		Row(size_type num, const Matrix& m) {
-			assert(num < _height);
+		Row(size_type col, const Matrix& m) {
+			assert(col < _height);
 			for (size_type i = 0; i < _width; ++i) {
-				_elems[i] = const_cast<pointer>(&(m._elements[i].operator[](num)));
+				_elems[i] = const_cast<pointer>(&(m._elements[i].operator[](col)));
 			}
 		}
 
-		reference operator[](size_type pos) {
-			return *_elems[pos];
+		reference operator[](size_type col) noexcept {
+			return *_elems[col];
 		}
-		const_reference operator[](size_type pos) const {
-			return *_elems[pos];
+		const_reference operator[](size_type col) const noexcept {
+			return *_elems[col];
 		}
 	private:
 		std::array<pointer, _width> _elems;
@@ -41,11 +41,23 @@ public:
 	Matrix(Matrix&&);
 	~Matrix() = default;
 
-	Row operator[](size_type row_num) {
-		return Row(row_num, const_cast<const Matrix&>(*this));
+	Row operator[](size_type row) noexcept {
+		return Row(row, const_cast<const Matrix&>(*this));
 	}
-	const Row operator[](size_type row_num) const {
-		return Row(row_num, *this);
+	const Row operator[](size_type row) const noexcept {
+		return Row(row, *this);
+	}
+
+	reference at(size_type x, size_type y) {
+		if (x >= _width || y >= _height)
+			throw std::out_of_range("Given index is outside the matrix boundaries.");
+		return *this[x][y];
+	}
+
+	const_reference at(size_type x, size_type y) const {
+		if (x >= _width || y >= _height)
+			throw std::out_of_range("Given index is outside the matrix boundaries.");
+		return *this[x][y];
 	}
 
 private:
