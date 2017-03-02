@@ -7,8 +7,6 @@ public:
 	P(const P&) = default;
 	P(P&&) = delete;
 
-private:
-	unsigned x = 0;
 };
 
 template <typename Type, size_t size>
@@ -62,7 +60,7 @@ int main() {
 	p.at(2, 2) = 100;
 	const decltype(p)& r = p;
 	r.at(2,2);
-	r.swap(p);
+//	r.swap(p);
 	std::cout << "Hello, World!" << std::endl;
 	return 0;
 }

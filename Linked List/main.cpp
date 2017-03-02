@@ -191,5 +191,7 @@ int main() {
 	A a(100);
 	B b;
 
+	LinkedList<int> ll;
+
 	return 0;
 }

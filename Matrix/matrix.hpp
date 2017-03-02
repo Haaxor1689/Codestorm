@@ -19,6 +19,16 @@ public:
 	Matrix() = default;
 
 	/**
+	 * @brief	parametric ctor
+	 * 			creates Matrix witch copies of element
+	 * @param 	element
+	 */
+	Matrix(const Type& element) {
+		for (Type& elem : _elements)
+			elem = element;
+	}
+
+	/**
 	 * @brief 	copy ctor
 	 * @param 	m
 	 */
@@ -29,6 +39,21 @@ public:
 	 * @param 	m
 	 */
 	Matrix(Matrix&& m) noexcept : _elements(std::move(m._elements)) {}
+
+	/**
+	 * @brief	constructs Matrix from iterators of any container
+	 * 			Node: doesn't check the lenght, for correct use
+	 * 			make sure iterator sequence has the right length
+	 * @param 	begin
+	 * @param 	end
+	 */
+	template <typename Iter>
+	Matrix(Iter begin, Iter end) {
+		size_type i = 0;
+		for (; begin != end; ++begin, ++i) {
+			_elements[i] = *begin;
+		}
+	}
 
 	/**
 	 * @brief	initializer_list ctor
