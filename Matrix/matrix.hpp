@@ -1,5 +1,4 @@
 #include <array>
-#include <vector>
 
 #ifndef MATRIX_MATRIX_HPP
 #define MATRIX_MATRIX_HPP
