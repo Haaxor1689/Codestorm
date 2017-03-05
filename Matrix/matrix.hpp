@@ -176,11 +176,9 @@ public:
 	 * @param 	m 	other matrix
 	 * @return 	result of multiplication
 	 */
-	template <typename T, size_type x, size_type y>
-	Matrix<Type, _height, x> operator*(const Matrix<T, x, y>& m) {
-		static_assert(std::is_same<Type, T>() && _height == x);
+	template <size_type x, size_type y>
+	Matrix<Type, _height, x> operator*(const Matrix<Type, x, y>& m) {
 		Matrix<Type, _height, x> tmp;
-		/// jth row
 		for (size_type j = 0; j < _height; ++j) {
 			for (size_type k = 0; k < x; ++k) {
 				Type sum{};
@@ -188,6 +186,22 @@ public:
 					sum += this->at(i, j) * m.at(k, i);
 				}
 				tmp.at(k, j) = sum;
+			}
+		}
+		return tmp;
+	}
+
+	/**
+	 * @brief	matrix multiplication by scalar
+	 * @param 	scalar
+	 * @param 	m
+	 * @return 	result of multiplication
+	 */
+	friend Matrix operator*(const Type& scalar, const Matrix& m) {
+		Matrix tmp;
+		for (std::size_t j = 0; j < m.height(); ++j) {
+			for (std::size_t i = 0; i < m.width(); ++i) {
+				tmp.at(i, j) = scalar * m.at(i, j);
 			}
 		}
 		return tmp;

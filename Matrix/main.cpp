@@ -68,6 +68,7 @@ int main() {
 						   1, 1,
 						   1, 1};
 	Matrix<int, 2, 2> c = a * b;
+	auto d = 3 * c;
 	std::cout << c;
 	std::cout << "Hello, World!" << std::endl;
 	return 0;
