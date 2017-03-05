@@ -61,6 +61,14 @@ int main() {
 	const decltype(p)& r = p;
 	r.at(2,2);
 //	r.swap(p);
+
+	Matrix<int, 3, 2> a = {0 , 1 , 2,
+						   3 , 4 , 5};
+	Matrix<int, 2, 3> b = {1, 1,
+						   1, 1,
+						   1, 1};
+	Matrix<int, 2, 2> c = a * b;
+	std::cout << c;
 	std::cout << "Hello, World!" << std::endl;
 	return 0;
 }
