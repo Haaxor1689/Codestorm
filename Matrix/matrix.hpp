@@ -21,7 +21,7 @@ public:
 	/**
 	 * @brief	parametric ctor
 	 * 			creates Matrix with copies of given element
-	 * @param 	element 
+	 * @param 	element
 	 */
 	Matrix(const Type& element) {
 		for (Type& elem : _elements)
@@ -214,20 +214,64 @@ public:
 	}
 
 	/**
+	 * @brief	self addition with other matrix
+	 * @param 	m
+	 * @return 	self reference
+	 */
+	Matrix& operator+=(const Matrix& m) noexcept {
+		*this = *this + m;
+		return *this;
+	}
+
+	/**
+	 * @brief	self substraction with other matrix
+	 * @param 	m
+	 * @return	self referecne
+	 */
+	Matrix& operator-=(const Matrix& m) noexcept {
+		*this = *this - m;
+		return *this;
+	}
+
+	/**
+	 * @brief	addition of two matrices
+	 * @param 	m
+	 * @return 	result of addition
+	 */
+	Matrix operator+(const Matrix& m) const {
+		Matrix tmp;
+		for (size_type i = 0; i < size(); ++i)
+			tmp._elements[i] = _elements[i] + m._elements[i];
+		return tmp;
+	}
+
+	/**
+	 * @brief	substraction of two matrices
+	 * @param 	m
+	 * @return 	resulf of substraction
+	 */
+	Matrix operator-(const Matrix& m) const {
+		Matrix tmp;
+		for (size_type i = 0; i < size(); ++i)
+			tmp._elements[i] = _elements[i] - m._elements[i];
+		return tmp;
+	}
+
+	/**
 	 * @brief	matrix multiplication by scalar
 	 * @param 	scalar
 	 * @param 	m
 	 * @return 	result of multiplication
 	 */
-	friend Matrix operator*(const Type& scalar, const Matrix& m) {
+	Matrix operator*(const Type& scalar) const {
 		Matrix tmp;
-		for (size_type i = 0; i < _width * _height; ++i)
-			tmp._elements[i] = scalar *  m._elements[i];
+		for (size_type i = 0; i < size(); ++i)
+			tmp._elements[i] = scalar *  _elements[i];
 		return tmp;
 	}
 
-	friend Matrix operator*(const Matrix& m, const Type& scalar) {
-		return scalar * m;
+	friend Matrix operator*(const Type& scalar, const Matrix& m) {
+		return m * scalar;
 	}
 
 private:
