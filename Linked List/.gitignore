@@ -29,8 +29,10 @@
 *.app
 
 #files and folders
-/build
-/old
+build/
+old/
+.idea/
+.clang-tidy.ymp
 CMakeLists.txt
 main.cpp
 catch.hpp
