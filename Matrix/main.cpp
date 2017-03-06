@@ -62,14 +62,13 @@ int main() {
 	r.at(2,2);
 //	r.swap(p);
 
-	Matrix<int, 3, 2> a = {0 , 1 , 2,
-						   3 , 4 , 5};
-	Matrix<int, 2, 3> b = {1, 1,
-						   1, 1,
-						   1, 1};
-	Matrix<int, 2, 2> c = a * b;
+	Matrix<int, 3, 3> a = {0, 1, 2,
+						   3, 4, 5,
+						   6, 7, 8};
+	Matrix<int, 10, 3> b(1);
+	auto c = a * b;
 	auto d = 3 * c;
-	std::cout << c;
+	std::cout << d;
 	std::cout << "Hello, World!" << std::endl;
 	return 0;
 }

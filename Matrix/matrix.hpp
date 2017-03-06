@@ -177,8 +177,9 @@ public:
 	 * @return 	result of multiplication
 	 */
 	template <size_type x, size_type y>
-	Matrix<Type, _height, x> operator*(const Matrix<Type, x, y>& m) {
-		Matrix<Type, _height, x> tmp;
+	Matrix<Type, x, _height> operator*(const Matrix<Type, x, y>& m) {
+		static_assert(_width == y);
+		Matrix<Type, x, _height> tmp;
 		for (size_type j = 0; j < _height; ++j) {
 			for (size_type k = 0; k < x; ++k) {
 				Type sum{};
@@ -192,6 +193,27 @@ public:
 	}
 
 	/**
+	 * @brief	self multiplication by other matrix
+	 * @param 	m
+	 * @return 	self reference
+	 */
+	Matrix& operator*=(const Matrix& m) noexcept {
+		*this = *this * m;
+		return *this;
+	}
+
+	/**
+	 * @brief	self multiplication by scalar
+	 * @param 	scalar
+	 * @return	self reference
+	 */
+	Matrix& operator*=(const Type& scalar) noexcept {
+		for (auto& elem : _elements)
+			elem *= scalar;
+		return *this;
+	}
+
+	/**
 	 * @brief	matrix multiplication by scalar
 	 * @param 	scalar
 	 * @param 	m
@@ -199,11 +221,8 @@ public:
 	 */
 	friend Matrix operator*(const Type& scalar, const Matrix& m) {
 		Matrix tmp;
-		for (std::size_t j = 0; j < m.height(); ++j) {
-			for (std::size_t i = 0; i < m.width(); ++i) {
-				tmp.at(i, j) = scalar * m.at(i, j);
-			}
-		}
+		for (size_type i = 0; i < _width * _height; ++i)
+			tmp._elements[i] = scalar *  m._elements[i];
 		return tmp;
 	}
 
@@ -215,7 +234,7 @@ template <typename T, std::size_t w, std::size_t h>
 std::ostream& operator<<(std::ostream& os, const Matrix<T, w, h>& m) {
 	for (std::size_t i = 0; i < h; ++i) {
 		for (std::size_t j = 0; j < w; ++j) {
-			os << m.at(j, i) << " ";
+			os << m.at(j, i) << "\t";
 		}
 		os << "\n";
 	}
