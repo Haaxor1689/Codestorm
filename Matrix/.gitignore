@@ -2,3 +2,7 @@
 bin/
 project/
 .idea/
+
+# Ignore files
+CMakeLists.txt
+main.cpp
