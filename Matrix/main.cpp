@@ -65,7 +65,7 @@ int main() {
 	Matrix<int, 3, 3> a = {0, 1, 2,
 						   3, 4, 5,
 						   6, 7, 8};
-	Matrix<int, 10, 3> b(1);
+	Matrix<int, 3, 10> b(1);
 	auto c = a * b;
 	auto d = 3 * c;
 	std::cout << d;

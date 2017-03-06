@@ -176,9 +176,9 @@ public:
 	 * @param 	m 	other matrix
 	 * @return 	result of multiplication
 	 */
-	template <size_type x, size_type y>
-	Matrix<Type, x, _height> operator*(const Matrix<Type, x, y>& m) {
-		static_assert(_width == y);
+	template <size_type x>
+	Matrix<Type, x, _height> operator*(const Matrix<Type, x, _width>& m) {
+//		static_assert(_width == y);
 		Matrix<Type, x, _height> tmp;
 		for (size_type j = 0; j < _height; ++j) {
 			for (size_type k = 0; k < x; ++k) {
@@ -226,10 +226,20 @@ public:
 		return tmp;
 	}
 
+	friend Matrix operator*(const Matrix& m, const Type& scalar) {
+		return scalar * m;
+	}
+
 private:
 	std::array<Type, _width * _height> _elements = std::array<Type, _width * _height>();
 };
 
+/**
+ * @brief	function printing matrix to ostream
+ * @param 	os
+ * @param 	m
+ * @return 	reference to ostream aquired via params
+ */
 template <typename T, std::size_t w, std::size_t h>
 std::ostream& operator<<(std::ostream& os, const Matrix<T, w, h>& m) {
 	for (std::size_t i = 0; i < h; ++i) {
