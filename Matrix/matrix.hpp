@@ -2,7 +2,7 @@
 #define MATRIX_MATRIX_HPP
 
 #include <array>
-#include <type_traits>
+#include <ostream>
 
 template <typename Type, size_t _width, size_t _height>
 class Matrix {
