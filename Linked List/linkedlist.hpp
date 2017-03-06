@@ -11,12 +11,7 @@ LinkedList
 #include <initializer_list>
 #include <memory>
 
-namespace {
-
-}
-
 template <typename T> class LinkedList;
-
 
 namespace detail {
 
