@@ -1,16 +1,16 @@
-#include <array>
-#include <type_traits>
-
 #ifndef MATRIX_MATRIX_HPP
 #define MATRIX_MATRIX_HPP
 
-template <typename Type, std::size_t _width, std::size_t _height>
+#include <array>
+#include <type_traits>
+
+template <typename Type, size_t _width, size_t _height>
 class Matrix {
 	using reference = Type&;
 	using const_reference = const Type&;
 	using pointer = Type*;
 	using const_pointer = const Type*;
-	using size_type = std::size_t;
+	using size_type = size_t;
 
 public:
 	/**
@@ -20,8 +20,8 @@ public:
 
 	/**
 	 * @brief	parametric ctor
-	 * 			creates Matrix witch copies of element
-	 * @param 	element
+	 * 			creates Matrix with copies of given element
+	 * @param 	element 
 	 */
 	Matrix(const Type& element) {
 		for (Type& elem : _elements)
@@ -58,6 +58,7 @@ public:
 	/**
 	 * @brief	initializer_list ctor
 	 * @param 	init
+	 * @throw	std::logic_error when wrong number of elements is given
 	 */
 	Matrix(std::initializer_list<Type> init) {
 		if (init.size() != size())
@@ -123,7 +124,7 @@ public:
 
 	/**
 	 * @brief	height of matrix getter
-	 * @return 	heirght of matrix
+	 * @return 	height of matrix
 	 */
 	size_type height() const noexcept { return _height; }
 
@@ -149,10 +150,10 @@ public:
 
 	/**
 	 * @brief	function returning reference to element of matrix
-	 * 			std::out_of range throw is element is out of bounds
 	 * @param 	x		position in column
 	 * @param 	y		position in row
 	 * @return	reference to element
+	 * @throw	std::out_of_range when given index isn't inside matrix boundaries
 	 */
 	reference at(size_type x, size_type y) {
 		if (x >= _width || y >= _height)
@@ -162,10 +163,10 @@ public:
 
 	/**
 	 * @brief	function returning const reference to element of matrix
-	 * 			std::out_of range throw is element is out of bounds
 	 * @param 	x 		position in column
 	 * @param 	y 		position in row
 	 * @return 	const reference to element
+	 * @throw	std::out_of_range when given index isn't inside matrix boundaries
 	 */
 	const_reference at(size_type x, size_type y) const {
 		return const_cast<const_reference>(const_cast<Matrix*>(this)->at(x, y));
@@ -178,7 +179,6 @@ public:
 	 */
 	template <size_type x>
 	Matrix<Type, x, _height> operator*(const Matrix<Type, x, _width>& m) {
-//		static_assert(_width == y);
 		Matrix<Type, x, _height> tmp;
 		for (size_type j = 0; j < _height; ++j) {
 			for (size_type k = 0; k < x; ++k) {
@@ -235,20 +235,20 @@ private:
 };
 
 /**
- * @brief	function printing matrix to ostream
+ * @brief	function for printing matrix to ostream
  * @param 	os
  * @param 	m
  * @return 	reference to ostream aquired via params
  */
-template <typename T, std::size_t w, std::size_t h>
+template <typename T, size_t w, size_t h>
 std::ostream& operator<<(std::ostream& os, const Matrix<T, w, h>& m) {
-	for (std::size_t i = 0; i < h; ++i) {
-		for (std::size_t j = 0; j < w; ++j) {
+	for (size_t i = 0; i < h; ++i) {
+		for (size_t j = 0; j < w; ++j) {
 			os << m.at(j, i) << "\t";
 		}
 		os << "\n";
 	}
 	return os;
-};
+}
 
 #endif //MATRIX_MATRIX_HPP
