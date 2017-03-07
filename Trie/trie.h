@@ -202,18 +202,16 @@ private:
 	 * @param 	node
 	 */
 	void _clear_leaves(const Node* node) noexcept {
-		if (node) {
-			if (node->left()) {
-				_clear_leaves(node->left());
-				if (_is_leaf(node->left()))
-					const_cast<Node*>(node)->_left.reset();
-			}
+		if (node->left()) {
+			_clear_leaves(node->left());
+			if (_is_leaf(node->left()))
+				const_cast<Node*>(node)->_left.reset();
+		}
 
-			if (node->right()) {
-				_clear_leaves(node->right());
-				if (_is_leaf(node->right()))
-					const_cast<Node*>(node)->_right.reset();
-			}
+		if (node->right()) {
+			_clear_leaves(node->right());
+			if (_is_leaf(node->right()))
+				const_cast<Node*>(node)->_right.reset();
 		}
 	}
 
@@ -243,7 +241,7 @@ private:
 			_uniteWith(const_cast<Node*>(to->right()), with->right(), zip);
 		}
 	}
-	
+
 	/**
 	 * @brief	recursive function used by intersectWith
 	 * @param 	to 			raw pointer to the Node of Trie which will be result of intersect
