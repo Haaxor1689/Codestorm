@@ -243,13 +243,7 @@ private:
 			_uniteWith(const_cast<Node*>(to->right()), with->right(), zip);
 		}
 	}
-
-	void bla() {
-		std::vector<int> v(10, 0);
-		for (auto it = v.begin(); it != v.end(); ++it)
-			*it = *it + 1;
-	}
-
+	
 	/**
 	 * @brief	recursive function used by intersectWith
 	 * @param 	to 			raw pointer to the Node of Trie which will be result of intersect
