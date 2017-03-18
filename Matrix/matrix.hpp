@@ -129,6 +129,24 @@ public:
 	size_type height() const noexcept { return _height; }
 
 	/**
+	* @brief	function returning reference to element of matrix
+	* @param 	pos 		linear position of element
+	* @return	reference to element
+	*/
+	reference operator()(size_type pos) noexcept {
+		return _elements[pos];
+	}
+
+	/**
+	* @brief	function returning const reference to element of matrix	
+	* @param 	pos 		linear position of element
+	* @return 	const reference to element
+	*/
+	const_reference operator()(size_type pos) const noexcept {
+		return _elements[pos];
+	}
+
+	/**
 	 * @brief	function returning reference to element of matrix
 	 * @param 	x		position in column
 	 * @param 	y		position in row
@@ -146,6 +164,30 @@ public:
 	 */
 	const_reference operator()(size_type x, size_type y) const noexcept {
 		return _elements[x + y * _width];
+	}
+
+	/**
+	* @brief	function returning reference to element of matrix
+	* @param 	pos 		linear position of element
+	* @return	reference to element
+	* @throw	std::out_of_range when given index isn't inside matrix boundaries
+	*/
+	reference at(size_type pos) {
+		try {
+			return _elements.at(pos);
+		} catch (const std::out_of_range&) {
+			throw std::out_of_range("Given index is outside the matrix boundaries.");
+		}
+	}
+
+	/**
+	* @brief	function returning const reference to element of matrix
+	* @param 	pos 		linear position of element
+	* @return 	const reference to element
+	* @throw	std::out_of_range when given index isn't inside matrix boundaries
+	*/
+	const_reference at(size_type pos) const {
+		return const_cast<const_reference>(const_cast<Matrix*>(this)->at(pos));
 	}
 
 	/**
