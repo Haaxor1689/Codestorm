@@ -1,0 +1,43 @@
+#pragma once
+// vim: ft=cpp
+
+// LLVM 4.0's libc++ defines this already
+#if !defined( _LIBCPP_VERSION ) || _LIBCPP_VERSION < 4000
+
+namespace std {
+inline namespace cxx17 {
+
+template< typename T >
+void destroy_at( T* p )
+{
+    p->~T();
+}
+
+template< typename ForwardIt >
+void destroy( ForwardIt first, ForwardIt last )
+{
+    for ( ; first != last; ++first )
+        std::destroy_at( std::addressof( *first ) );
+}
+
+template< typename ForwardIt >
+void uninitialized_value_construct( ForwardIt first, ForwardIt last )
+{
+    for ( ; first != last; ++first )
+        new ( std::addressof( *first ) )
+                    typename std::iterator_traits< ForwardIt >::value_type();
+}
+
+template< typename InputIt, typename ForwardIt >
+ForwardIt uninitialized_move( InputIt first, InputIt last, ForwardIt d_first ) {
+    for ( ; first != last; ++d_first, ++first ) {
+        ::new ( std::addressof(*d_first) )
+              typename std::iterator_traits< ForwardIt >::value_type( std::move( *first ) );
+    }
+    return d_first;
+}
+
+} // namespace cxx17
+} // namespace std
+
+#endif

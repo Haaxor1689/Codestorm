@@ -1,33 +1,13 @@
 #pragma once
 
 #include <iterator>
-#include <algorithm>
+#include <initializer_list>
 #include <memory>
 #include <type_traits>
-#include <string>
-#include <iostream>
-#include <initializer_list>
 
-// A double-ended vector implemented as contiguous memory round buffer which
-// reallocates when full. While providing similar interface to std::deque
-// (amortized constant-time insert and remove to both ends and constant-time
-// indexing) it has more compact memory footprint, but requires elements to be
-// moveable and does not have stable iterators or references.
-//
-// Similarly to std::vector it keeps a reserve memory and grows only when this
-// is exhausted. It should grow to twice the previous capacity to ensure
-// amortized constant time insertion.
-//
-// The memory that does not contain actual data should not contain constructed
-// objects, it should be uninitialised.  Uninitialized storage can be obtained
-// from allocator (using allocate and deallocate).
-//
 // Several nice utilities for using uninitialised storage are available in C++17
 // but not yet in most clang/gcc implementations (they are in LLVM 4.0 on FI
 // computers), so they are provided also by this header.
-// See http://en.cppreference.com/w/cpp/header/memory#Uninitialized_storage for
-// documentation.
-
 #include "cxx17memory"
 
 template <typename T, typename Allocator>
